@@ -1,6 +1,5 @@
-
 <div align="center">
-  <img height="600" src="[blob:https://br.pinterest.com/ce0e7ab4-e5e6-43bd-848d-cca0c8fcb4f1](https://i.pinimg.com/1200x/5b/5c/e8/5b5ce8a7c64e4f4e4a15b10e50ba3dcd.jpg)" />
+  <img src="https://githubusercontent.com" style="border-radius: 50%; width: 200px; height: 200px; object-fit: cover;" />
 </div>
 
 # CodeCofee
