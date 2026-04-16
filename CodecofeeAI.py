@@ -1,4 +1,4 @@
-import os, time, platform
+import os, time, platform #adicionar uma forma de baixar todas as depedencias automaticamente e uma interface CLI bem feita
 from openai import OpenAI
 from os import getenv
 
@@ -17,7 +17,8 @@ limpar()
 
 
 try:
-    user = input("Qual seria o seu nome: ")
+    time.sleep(0.2)
+    user = input("Qual seria o seu nome: ")#falta adicionar o sistema de pular o nomeamento, o quê na versão final vai mudar pois pretendo adicionar um login unico com verificação via e-mail
     print(f"\n e um prazer conhece-lo {user}\n")
     time.sleep(1.0)
     ianam = input("Qual nome vc quer dar a sua IA?: ")
@@ -29,7 +30,7 @@ time.sleep(2.0)
 limpar()
 
 #memoria da IA
-historico=[{"role": "system", "content": "Falar apenas Portugues brasil"}]
+historico=[{"role": "system", "content": "Falar apenas Portugues brasil", }]#melhorar esse sistem ainda esta muinto basico
 
 while True:
 
@@ -37,11 +38,10 @@ while True:
 
     quest = input(f"[{user}]>>> ")
     historico.append({"role": "user", "content": quest})
-
+     
     client = OpenAI(
       base_url="https://openrouter.ai/api/v1",
-      api_key=getenv("OPENROUTER_API_KEY"),
-      messages=historico,
+      api_key=getenv("OPENROUTER_API_KEY"),#adicionar uma forma de baixar a key sozinha ou executar
     )
     completion = client.chat.completions.create(
       model="nvidia/nemotron-3-super-120b-a12b:free",
@@ -56,12 +56,11 @@ while True:
       #   "${Model.Mixtral_8x_22B_Instruct}"
       # ]
      # },
-    messages=[
-       {
-         "role": "user",
-         "content": quest,
-       },
-      ],
+     
+    messages=historico,
+
     ) 
+   
+
     print(str(ianam) + "~≳ " + completion.choices[0].message.content)
 
