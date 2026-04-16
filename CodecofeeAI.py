@@ -4,12 +4,14 @@ from os import getenv
 
 def limpar():
     if platform.system() == "Windows":
-        os.system("clear")
+        os.system("clr")
     
     elif platform.system() == "Linux":
         os.system("clear")
     else:
         print("Infelizmente seu dispositivo não e compativel na nossa lista de dispositivos compativeis...")
+        time.sleep(4.0)
+        os.system("exit")
 
 limpar()
 
@@ -26,14 +28,20 @@ except:
 time.sleep(2.0)
 limpar()
 
+#memoria da IA
+historico=[{"role": "system", "content": "Falar apenas Portugues brasil"}]
+
 while True:
 
 # gets API Key from environment variable OPENAI_API_KEY
-    quest = input(f"[{user}]>>>")
+
+    quest = input(f"[{user}]>>> ")
+    historico.append({"role": "user", "content": quest})
 
     client = OpenAI(
       base_url="https://openrouter.ai/api/v1",
       api_key=getenv("OPENROUTER_API_KEY"),
+      messages=historico,
     )
     completion = client.chat.completions.create(
       model="nvidia/nemotron-3-super-120b-a12b:free",
@@ -55,4 +63,5 @@ while True:
        },
       ],
     ) 
-    print(completion.choices[0].message.content)
+    print(str(ianam) + "~≳ " + completion.choices[0].message.content)
+
