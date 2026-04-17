@@ -15,6 +15,12 @@ def limpar():
 
 limpar()
 
+try:
+  if getenv("OPENROUTER_API_KEY") == None:
+    Api_key = input("Nos informe a sua key, pode ser achada no openrouter: ")
+    os.environ["OPENROUTER_API_KEY"] = Api_key
+except:
+    print("infelizmente recebemos algum erro no nosso codigo tente rodar novamente...")
 
 try:
     time.sleep(0.2)
