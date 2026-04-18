@@ -35,6 +35,11 @@ except:
 time.sleep(2.0)
 limpar()
 
+client = OpenAI(
+      base_url="https://openrouter.ai/api/v1",
+      api_key=getenv("OPENROUTER_API_KEY"),#adicionar uma forma de baixar a key sozinha ou executar
+    )
+
 #memoria da IA
 historico=[{"role": "system", "content": "Falar apenas Portugues brasil", }]#melhorar esse sistem ainda esta muinto basico
 
@@ -45,10 +50,6 @@ while True:
     quest = input(f"[{user}]>>> ")
     historico.append({"role": "user", "content": quest})
      
-    client = OpenAI(
-      base_url="https://openrouter.ai/api/v1",
-      api_key=getenv("OPENROUTER_API_KEY"),#adicionar uma forma de baixar a key sozinha ou executar
-    )
     completion = client.chat.completions.create(
       model="nvidia/nemotron-3-super-120b-a12b:free",
       extra_headers={
