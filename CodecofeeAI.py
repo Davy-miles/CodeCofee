@@ -1,4 +1,4 @@
-import os, time, platform, sys #adicionar uma forma de baixar todas as depedencias automaticamente e uma interface CLI bem feita e adicionar uma interface grafica sem ser CLI
+import os, time, platform, sys, json #adicionar uma forma de baixar todas as depedencias automaticamente e uma interface CLI bem feita e adicionar uma interface grafica sem ser CLI
 from openai import OpenAI
 from os import getenv
 
@@ -34,10 +34,10 @@ except:
 
 try:
     time.sleep(0.2)
-    user = input("Qual seria o seu nome: ")#falta adicionar o sistema de pular o nomeamento, o quê na versão final vai mudar pois pretendo adicionar um login unico com verificação via e-mail
+    user = input("Qual seria o seu nome: ")#na versão final vai mudar pois pretendo adicionar um login unico com verificação via e-mail 
     print(f"\n e um prazer conhece-lo {user}\n")
     time.sleep(1.0)
-    ianam = input("Qual nome vc quer dar a sua IA?: ")
+    ianam = input("Qual apelido vc quer dar ao seu chat?: ")
 except:
     print("Tivemos um erro no nosso servidor, por favor reinicie")
 
@@ -50,22 +50,23 @@ client = OpenAI(
       api_key=getenv("OPENROUTER_API_KEY"),
     )
 
-#memoria da IA
-historico=[{"role": "system", "content": f"Falar apenas Portugues brasil; Seu nome é {ianam}; meu nome é {user}", }]#melhorar esse sistem ainda esta muinto basico
+historico=[{"role": "system", "content": f"Falar apenas Portugues brasil; Seu nome é {ianam}; meu nome é {user}", }]
 
 while True:
 
 # gets API Key from environment variable OPENAI_API_KEY
 
     quest = input(f"[{user}]>>> ")
-    historico.append({"role": "user", "content": quest})
-     
+    historico.append({"role": "user", "content": quest, })
+
     completion = client.chat.completions.create(
-      model="openai/gpt-4o-mini-2024-07-18",
+      model="openrouter/free",
+      messages=historico,
       extra_headers={
         "HTTP-Referer": "<YOUR_SITE_URL>", # Optional. Site URL for rankings on openrouter.ai.
         "X-OpenRouter-Title": "<YOUR_SITE_NAME>", # Optional. Site title for rankings on openrouter.ai.
     },
+
     # pass extra_body to access OpenRouter-only arguments.
     # extra_body={
       # "models": [
@@ -73,11 +74,17 @@ while True:
       #   "${Model.Mixtral_8x_22B_Instruct}"
       # ]
      # },
-     
-    messages=historico,
+    )
 
-    ) 
-   
+
+    historico.append({"role": "assistant", "content": completion.choices[0].message.content,}),
+    
+    convertxt = json.dumps(historico)
+    arquivo = open("historico.json", "w")
+    arquivo.write(convertxt)
+    arquivo.close()
 
     print( str(f"\n{ianam}") + "~≳ " + completion.choices[0].message.content + str("\n"))
+
+    
 
