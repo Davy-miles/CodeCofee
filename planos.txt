@@ -1,0 +1,21 @@
+pontos a melhorar:
+-->interface CLI que depois vai virar uma interface grafica.
+-->port para outros sistemas, android, windows, (mac não e um sistema adequado).
+-->aprimorar o historico para a ia memorizar e apreder melhor.
+-->api, tipo talvez se der não deixar a api num arquivo publico que pode ser editado por geral igual o txt, não e algo horrivel mas se tiver como esconder ou quando lançar em si com interface e compilar tudo e esconder pode ajudar 
+-->na versão final vai mudar pois pretendo adicionar um login unico com verificação via e-mail 
+-->tenho plano de criar um painel de configurações que vai salvar tudo em um arquivo no caso o Config.txt, onde vai fcar os chats e as configurações e tals ate pra mudar o modelo da ia
+-->animações na interface
+-->geração de texto automatica, tipo ir genrando chunk por chunk ao inves de apenas jogar na tela o resultado(mais agradavel visualmente)
+
+
+;
+
+problemas a arrumar:
+-->um problema indentificado, e que o .json do historico gera um grande arquvi e bom pra ia aprender e tals mas deixa lenta eu acho.
+-->blibliotecas não instaladas ou disponiveis no python.
+-->algum executavel provavelmente em outra linguagem que instala as depedencias(python e outras linguas), que vc da 2 clique no linux ou pra windows e ele já abre o software.
+--> API desativando toda hora, ou caindo ou dando problemas(e melhor arrumar).
+
+
+;

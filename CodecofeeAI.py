@@ -1,9 +1,16 @@
-import os, time, platform, sys, json #adicionar uma forma de baixar todas as depedencias automaticamente e uma interface CLI bem feita e adicionar uma interface grafica sem ser CLI
-from openai import OpenAI
+import os, time, platform, sys, json 
 from os import getenv
 
 def reset():
     os.execv(sys.executable, [sys.executable] + sys.argv)
+
+try:
+   from openai import OpenAI
+except:
+   os.system(f"{sys.executable} -m pip install openai")
+   reset()
+
+
 
 
 def limpar():
@@ -52,6 +59,20 @@ client = OpenAI(
 
 historico=[{"role": "system", "content": f"Falar apenas Portugues brasil; Seu nome é {ianam}; meu nome é {user}", }]
 
+if os.path.exists("historico.json"):
+    arquivo = open("historico.json")
+    texto = arquivo.read()
+    arquivo.close()
+    try:
+        historico = json.loads(texto)
+    except:
+        pass
+else:
+    convertxt = json.dumps(historico)
+    arquivo = open("historico.json", "w")
+    arquivo.write(convertxt)
+    arquivo.close()
+
 while True:
 
 # gets API Key from environment variable OPENAI_API_KEY
@@ -83,6 +104,7 @@ while True:
     arquivo = open("historico.json", "w")
     arquivo.write(convertxt)
     arquivo.close()
+
 
     print( str(f"\n{ianam}") + "~≳ " + completion.choices[0].message.content + str("\n"))
 
